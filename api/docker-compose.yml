@@ -1,0 +1,29 @@
+version: "3"
+services:
+  php:
+    image: dockette/php:7.4-fpm
+    command: php -S 0.0.0.0:8000 -t /var/app/public
+    volumes:
+      - ./:/var/app
+    environment:
+      DB_HOST: mysql
+      DB_DATABASE: app
+    ports:
+      - 80:8000
+    networks:
+      - network
+
+  mysql:
+    image: mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: app
+      MYSQL_USER: lumen
+      MYSQL_PASSWORD: secret
+    networks:
+      - network
+
+networks:
+  network:
