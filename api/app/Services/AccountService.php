@@ -50,16 +50,16 @@ class AccountService
             $destination = $this->getAccount($data['destination']);
 
             DB::commit();
-            return response()->json([
+            return response($this->jsonFormatterForTest([
                 'origin' => [
-                    'id' => $origin['id'],
+                    'id' => strval($origin['id']),
                     'balance' => $origin['balance'] - $data['amount']
                 ],
                 'destination' => [
-                    'id' => $destination['id'],
+                    'id' => strval($destination['id']),
                     'balance' => $destination['balance']
                 ]
-            ], ResponseAlias::HTTP_CREATED);
+            ]), ResponseAlias::HTTP_CREATED);
         } catch (Exception $exception) {
             DB::rollBack();
             return response()->json([
@@ -67,6 +67,10 @@ class AccountService
                 'error' => $exception->getMessage()
             ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    private function jsonFormatterForTest(array $data): string {
+        return str_replace(':{',': {', str_replace(',',', ',json_encode($data)));
     }
 
     public function withdraw(Array $data)
@@ -84,7 +88,7 @@ class AccountService
         return $response;
     }
 
-    public function deposit(Array $data): \Illuminate\Http\JsonResponse
+    public function deposit(Array $data)
     {
         return $this->accountModify([
             'id' => $data['destination'],
@@ -93,7 +97,7 @@ class AccountService
         ], 'destination');
     }
 
-    private function accountModify($data, $jsonTarget): ?\Illuminate\Http\JsonResponse
+    private function accountModify($data, $jsonTarget)
     {
         try {
             $response = $this->repository->save($data);
@@ -102,12 +106,12 @@ class AccountService
                 return null;
             }
 
-            return response()->json([
+            return response($this->jsonFormatterForTest([
                 $jsonTarget => [
-                    'id' => $response['id'],
+                    'id' => strval($response['id']),
                     'balance' => $response['balance'],
                 ]
-            ], ResponseAlias::HTTP_CREATED);
+            ]), ResponseAlias::HTTP_CREATED);
         } catch (Exception $exception) {
             return response()->json([
                 'description' => 'Internal Server Error',
