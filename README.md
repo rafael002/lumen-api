@@ -1,3 +1,3 @@
-![image](Lumen_splash.png)
+![image](api/resources/image/how_to_run.jpg)
 
 # teste
