@@ -11,10 +11,16 @@ class AccountService
 {
     private $repository;
 
-    public function __construct(AccountRepositoryInterface $repository) {
+    public function __construct(AccountRepositoryInterface $repository)
+    {
         $this->repository = $repository;
     }
 
+    /**
+     * Gets account's data
+     * @param $id
+     * @return mixed
+     */
     public function getAccount($id)
     {
         return $this->repository->get($id);
@@ -69,7 +75,13 @@ class AccountService
         }
     }
 
-    private function jsonFormatterForTest(array $data): string {
+    /**
+     * Laravel json formatter does not add some whitespaces required by tests, this method does.
+     * @param array $data
+     * @return string
+     */
+    private function jsonFormatterForTest(array $data): string
+    {
         return str_replace(':{',': {', str_replace(',',', ',json_encode($data)));
     }
 
@@ -97,6 +109,14 @@ class AccountService
         ], 'destination');
     }
 
+    /**
+     * Method responsible for effectively calling the service and making changes to account.
+     * Used by deposit and withdraw
+     *
+     * @param $data
+     * @param $jsonTarget
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory|null
+     */
     private function accountModify($data, $jsonTarget)
     {
         try {

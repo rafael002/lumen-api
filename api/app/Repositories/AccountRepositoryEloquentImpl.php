@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Account;
-use Illuminate\Http\Request;
 
 class AccountRepositoryEloquentImpl implements AccountRepositoryInterface
 {
@@ -13,7 +12,7 @@ class AccountRepositoryEloquentImpl implements AccountRepositoryInterface
         return $account ? $account->toArray() : null;
     }
 
-    public function save(Array $array)
+    public function save(Array $array): ?array
     {
         /** @var Account $account */
         $account = Account::find($array['id']);

@@ -13,15 +13,17 @@ class EventController extends Controller
         $this->service = $service;
     }
 
-    /** TODO remove
-     * OBS: Using __invoke to simplify route call
+    /**
+     * Using __invoke to simplify route call
+     * @param Request $request
+     * @return mixed
      */
     public function __invoke(Request $request)
     {
         $data = $request->json()->all();
         $method = $data['type'];
 
-        // here the type was already checked and is not invalid or null
+        // here the type (method) was already checked and is not invalid or null
         return $this->service->$method($data);
     }
 }

@@ -13,8 +13,6 @@
 |
 */
 
-/** Reset state before starting tests */
-
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
@@ -30,12 +28,13 @@ $router->post('/reset', function () use ($router) {
             'error' => $exception->getMessage()
         ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
     }
-
 });
-
 
 $router->post('event/', ['middleware' => 'event_validation', 'uses' => EventController::class]);
 
+$router->get('balance/', BalanceController::class);
 
-$router->get('balance/', AccountController::class);
+$router->get('/', function () use ($router) {
+    return "Made with S2 by Rafael Lourenco.";
+});
 

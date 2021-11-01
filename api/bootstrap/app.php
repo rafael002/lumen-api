@@ -73,7 +73,7 @@ $app->configure('app');
 */
 
 // $app->middleware([
-//     'event_validation' => App\Http\Middleware\EnsureEventIsValid::class
+//     'event_validation' => App\Http\Middleware\ExempleMiddleware::class
 // ]);
 
  $app->routeMiddleware([

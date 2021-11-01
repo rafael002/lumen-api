@@ -6,7 +6,7 @@ use App\Services\AccountService;
 use Exception;
 use Illuminate\Http\Request;
 
-class AccountController extends Controller
+class BalanceController extends Controller
 {
     private $service;
 
@@ -15,7 +15,9 @@ class AccountController extends Controller
     }
 
     /**
-     * OBS: Using __invoke to simplify route call
+     * Using __invoke() to simplify route call
+     * @param Request $request
+     * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
     public function __invoke(Request $request)
     {
