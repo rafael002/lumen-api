@@ -4,7 +4,7 @@ services:
     image: dockette/php:7.4-fpm
     volumes:
       - ./api/:/var/app
-    entrypoint: sh -c "sleep 10 && php /var/app/artisan migrate && php -S 0.0.0.0:8000 -t /var/app/public"
+    entrypoint: sh -c "php -r \"copy('/var/app/.env.example', '/var/app/.env');\" &&composer install --working-dir=/var/app && sleep 10 && php /var/app/artisan migrate && php -S 0.0.0.0:8000 -t /var/app/public"
     environment:
       DB_HOST: mysql
       DB_DATABASE: app
