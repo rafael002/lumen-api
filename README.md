@@ -22,14 +22,14 @@ docker-compose
 ````
 ---
 ## Traditional Way
-####1 - Install composer
+###1 - Install composer
 ````textbash
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php -r "if (hash_file('sha384', 'composer-setup.php') === '906a84df04cea2aa72f40b5f787e49f22d4c2f19492ac310e8cba5b96ac8b64115ac402c8cd292b8a03482574915d1a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 php composer-setup.php
 php -r "unlink('composer-setup.php');"
 ````
-####2 - config project
+###2 - config project
 ````textbash
 composer install
 
@@ -39,10 +39,10 @@ php artisan key:generate
 
 php artisan migrate
 ````
-####3 - Configure database
+###3 - Configure database
 configure a database and update .env file in project folder
 
-####4 - Run Project
+###4 - Run Project
 ````textbash
 php -S 0.0.0.0:80 -t ./public
 ````
